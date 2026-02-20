@@ -1,11 +1,17 @@
+<!-- template for the layout of the app, including navigation and footer -->
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
-
-	let { children } = $props();
+  let { children } = $props();
+//   import ChangeLanguageButton from '$lib/components/ChangeLanguageButton.svelte';
 </script>
 
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
+<div>
+	<!-- logo and changelanguagebutton here -->	
+	<img src="src\lib\assets\logo.png" alt="Quiz Game Logo" class="logo" style="width: 50px;"/>
+	
+	<!-- <ChangeLanguageButton /> -->
+	<button>Change Language</button> <!--change this to a real button later -->
+</div>
 
-{@render children()}
+<hr />
+
+{@render children()} 
