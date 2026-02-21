@@ -1,10 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types';
-
-    export let data: PageData;
-
-    // Access players directly from data
-    let players = data.players;
+    let { data } = $props<{ data: PageData }>();
+    let players = $derived(data.players);
 </script>
 
 <a href="/">Back to Home</a>
