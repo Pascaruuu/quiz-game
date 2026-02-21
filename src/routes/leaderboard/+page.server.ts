@@ -10,15 +10,13 @@ import { getLeaderboard } from '$lib/server/db_controller';
 // }
 
 export const load: PageServerLoad = async () => {
-    const rawLeaderboard = await getLeaderboard();
-    const players =  rawLeaderboard.map(
-        (row, index) => ({
-            rank: index + 1,
-            name: row.username,
-            score: row.score,
-            timePlayed: new Date(row.createdAt).toLocaleDateString()
-        })
-    )
+	const rawLeaderboard = await getLeaderboard();
+	const players = rawLeaderboard.map((row, index) => ({
+		rank: index + 1,
+		name: row.username,
+		score: row.score,
+		timePlayed: new Date(row.createdAt).toLocaleDateString()
+	}));
 
-    return { players };
+	return { players };
 };
