@@ -55,7 +55,7 @@
 
     @keyframes slide-bg {
         from { background-position: 0% 0%; }
-        to   { background-position-x: 1628px; }
+        to   { background-position-x: 1920px; }
     }
 
     h1 {
