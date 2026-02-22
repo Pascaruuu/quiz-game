@@ -4,6 +4,7 @@
   import FlashTransition from '$lib/components/FlashTransition.svelte';
   import { onMount } from 'svelte';
   import type { PageData } from './$types';
+  import { playFightSfx } from '$lib/audio';
   
   let { data } = $props<{ data: PageData }>();
   let transitioning = $state(false);
@@ -24,17 +25,14 @@
       img.src = src;
     });
 
-    // Read directly from data instead of $derived
     game.initGame(data.savedUsername);
   });
 
   async function handleReplay() {
-    // Flash transition first
+    playFightSfx();
     transitioning = true;
     await new Promise(resolve => setTimeout(resolve, 1800));
     transitioning = false;
-
-    // Reinitialize — username already stored in game.svelte.ts from first init
     await game.initGame(data.savedUsername);
   }
 </script>
@@ -300,7 +298,7 @@
 
   .gameover-popup {
     background: #1a1a2e;
-    border: 3px solid #ffe033;
+    border: 3px solid #fff;
     box-shadow: 6px 6px 0px #000;
     width: 60%;
     max-height: 90%;
@@ -314,7 +312,7 @@
 
   .gameover-popup h2 {
     font-size: 1.2rem;
-    color: #ffe033;
+    color: #fff;
     text-shadow: 2px 2px 0px #000;
   }
 

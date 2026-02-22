@@ -100,20 +100,23 @@
     }
 
     .back-btn {
-        align-self: flex-start;
-        color: #ffe033;
+        color: #4D4D4D;
         font-size: 1.45rem;
         text-decoration: none;
-        border: 2px solid #ffe033;
-        padding: 0.3rem 0.6rem;
-        box-shadow: 2px 2px 0px #000;
-        background: #1a1a2e;
-        margin-bottom: 0.5rem;
+        border: 3px solid #4D4D4D;
+        padding: 0.5rem 0.6rem 0.3rem 0.5rem;
+        box-shadow: 4px 4px 0px #000;
+        background: #F8F8F8;
+        margin-top: 2rem;
+        margin-left: 5rem;
+        align-self: flex-start;
     }
 
     .back-btn:hover {
-        background: #ffe033;
-        color: #1a1a2e;
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0px #000;
+        background: #4D4D4D;
+        color: #F8F8F8;
     }
 
     h1 {
@@ -139,13 +142,13 @@
     th {
         padding: 0.4rem 0.3rem;
         text-align: center;
-        border: 2px solid #ffe033;
+        border: 2px solid #4D4D4D;
     }
 
     td {
         padding: 0.4rem 0.3rem;
         text-align: center;
-        border: 1px solid rgba(255, 224, 51, 0.3);
+        border: 1px solid #4D4D4D;
         color: #fff;
         background: rgba(26, 26, 46, 0.75);
     }
