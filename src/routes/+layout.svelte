@@ -1,24 +1,56 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { goto, invalidateAll } from '$app/navigation';
+  import { page } from '$app/stores';
   import LoadingScreen from '$lib/components/LoadingScreen.svelte';
+  import { initAudio, playHomeBgm, playClick, toggleMute, isMuted } from '$lib/audio';
 
   let { children } = $props();
   let started = $state(false);
   let showLoading = $state(false);
   let username = $state('');
 
-  onMount(() => {
+  let isMutedState = $state(false);
+  let mutePressed = $state(false);
+
+  function handleMute() {
+    isMutedState = toggleMute();
+  }
+
+onMount(() => {
     const saved = document.cookie.match(/username=([^;]+)/)?.[1];
     if (saved) {
       username = decodeURIComponent(saved);
     }
+
+    initAudio();
+
+    const unsubscribe = page.subscribe(($page) => {
+      if ($page.url.pathname !== '/game') {
+        playHomeBgm();
+      }
+    });
+
+    function handleGlobalClick(e: MouseEvent) {
+      const target = e.target as HTMLElement;
+      if (target.closest('button') || target.closest('a')) {
+        playClick();
+      }
+    }
+
+    document.addEventListener('click', handleGlobalClick);
+
+    return () => {
+      unsubscribe();
+      document.removeEventListener('click', handleGlobalClick);
+    };
   });
 
   async function enterAndStart() {
     if (!username.trim()) return;
     document.cookie = `username=${encodeURIComponent(username)}; path=/`;
     document.documentElement.requestFullscreen().catch(() => {});
+    playHomeBgm(); // ← trigger on first user gesture
     showLoading = true;
     await invalidateAll();
     setTimeout(() => {
@@ -35,6 +67,22 @@
 {:else if !started}
   <div class="app-wrapper">
     <div class="arcade-frame"></div>
+    <button 
+      class="mute-btn"
+      class:pressed={mutePressed}
+      onclick={handleMute}
+      onmousedown={() => mutePressed = true}
+      onmouseup={() => mutePressed = false}
+      onmouseleave={() => mutePressed = false}
+    >
+      <img 
+        src={isMutedState 
+          ? (mutePressed ? '/mutebtn/musicoffclick.png' : '/mutebtn/musicoff.png')
+          : (mutePressed ? '/mutebtn/musiconclick.png' : '/mutebtn/musicon.png')
+        } 
+        alt={isMutedState ? 'Unmute' : 'Mute'} 
+      />
+    </button>
     <div class="screen-content">
       <div class="start-screen">
         <h1>日本語<br/>Quiz Game</h1>
@@ -54,6 +102,22 @@
 {:else}
   <div class="app-wrapper">
     <div class="arcade-frame"></div>
+    <button 
+      class="mute-btn"
+      class:pressed={mutePressed}
+      onclick={handleMute}
+      onmousedown={() => mutePressed = true}
+      onmouseup={() => mutePressed = false}
+      onmouseleave={() => mutePressed = false}
+    >
+      <img 
+        src={isMutedState 
+          ? (mutePressed ? '/mutebtn/musicoffclick.png' : '/mutebtn/musicoff.png')
+          : (mutePressed ? '/mutebtn/musiconclick.png' : '/mutebtn/musicon.png')
+        } 
+        alt={isMutedState ? 'Unmute' : 'Mute'} 
+      />
+    </button>
     <div class="screen-content">
       {@render children()}
     </div>
@@ -82,6 +146,32 @@
     align-items: center;
     justify-content: center;
     background: #000;
+  }
+
+  .mute-btn {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    z-index: 10;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    pointer-events: auto;
+    width: 80px;
+    height: 80px;
+    transition: transform 0.1s, box-shadow 0.1s;
+    image-rendering: pixelated;
+  }
+
+  .mute-btn img {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+  }
+
+  .mute-btn.pressed {
+    transform: translate(3px, 3px); /* ← pushed down effect */
   }
 
   /* ── Start Screen ── */
