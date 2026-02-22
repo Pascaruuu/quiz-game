@@ -34,16 +34,15 @@ function parseTsvLine(line: string): string[] {
 }
 
 function extractMeaning(html: string): string {
-  // Extract all <li> text inside glossary lists
   const glossaryMatch = html.match(/data-sc-content="glossary">(.*?)<\/ul>/s);
   if (!glossaryMatch) return '';
 
-  // Get all <li> items and strip tags
   const liMatches = glossaryMatch[1].matchAll(/<li>(.*?)<\/li>/gs);
   const meanings: string[] = [];
   for (const match of liMatches) {
     const text = match[1].replace(/<[^>]+>/g, '').trim();
     if (text) meanings.push(text);
+    if (meanings.length >= 3) break; // ← stop after 3
   }
   return meanings.join('; ');
 }
