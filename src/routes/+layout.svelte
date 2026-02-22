@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
+  import { goto, invalidateAll } from '$app/navigation';
   import LoadingScreen from '$lib/components/LoadingScreen.svelte';
 
   let { children } = $props();
@@ -15,11 +15,12 @@
     }
   });
 
-  function enterAndStart() {
+  async function enterAndStart() {
     if (!username.trim()) return;
     document.cookie = `username=${encodeURIComponent(username)}; path=/`;
     document.documentElement.requestFullscreen().catch(() => {});
     showLoading = true;
+    await invalidateAll();
     setTimeout(() => {
       started = true;
       goto('/');

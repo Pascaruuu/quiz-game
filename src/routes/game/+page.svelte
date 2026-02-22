@@ -144,7 +144,7 @@
     background-repeat: no-repeat;
     position: relative;
     overflow: hidden;
-    font-size: 0.4rem;
+    font-size: clamp(0.3rem, 1vw, 0.5rem);
   }
 
   .char-blue {
@@ -257,28 +257,28 @@
   }
 
   /* Options grid (right ~45% of bottom bar) */
-    .options-grid {
+  .options-grid {
     width: 43%;
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.3rem;
     padding: 0.4rem;
-    padding-top: 5rem; 
-    align-content: start; 
+    padding-top: 5rem;
+    align-content: start;
   }
 
   .option-btn {
     background: #F8F8F8;
     border: 2px solid #4D4D4D;
     color: #4D4D4D;
-    font-size: 1.8rem;
+    font-size: clamp(0.6rem, 1.5vw, 1.8rem); /* ← scales with viewport */
     cursor: pointer;
-    padding: 0.7rem;
+    padding: 0.4rem;
     text-align: center;
     box-shadow: 2px 2px 0px #000;
     transition: transform 0.1s, box-shadow 0.1s;
-    line-height: 2;
+    line-height: 1.5;
   }
 
   .option-btn:hover {
