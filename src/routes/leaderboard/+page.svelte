@@ -1,43 +1,84 @@
 <script lang="ts">
     import type { PageData } from './$types';
     let { data } = $props<{ data: PageData }>();
-    let players = $derived(data.players);
 </script>
 
 <div class="leaderboard">
     <a href="/" class="back-btn">← Back</a>
-
     <h1>Leaderboard</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Player</th>
-                <th>Score</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each players as player}
-                <tr class:top-three={player.rank <= 3}>
-                    <td class="rank">
-                        {#if player.rank === 1}🥇
-                        {:else if player.rank === 2}🥈
-                        {:else if player.rank === 3}🥉
-                        {:else}#{player.rank}
-                        {/if}
-                    </td>
-                    <td class="name">{player.name}</td>
-                    <td class="score">{player.score.toLocaleString()}</td>
-                    <td>{player.timePlayed}</td>
-                </tr>
-            {/each}
-        </tbody>
-    </table>
+    {#await data.players}
+        <div class="loading">
+            <p>Loading<span class="dots">...</span></p>
+        </div>
+    {:then players}
+        {#if players.length === 0}
+            <div class="loading">
+                <p>No scores yet!</p>
+            </div>
+        {:else}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each players as player}
+                        <tr class:top-three={player.rank <= 3}>
+                            <td class="rank">
+                                {#if player.rank === 1}🥇
+                                {:else if player.rank === 2}🥈
+                                {:else if player.rank === 3}🥉
+                                {:else}#{player.rank}
+                                {/if}
+                            </td>
+                            <td class="name">{player.name}</td>
+                            <td class="score">{player.score.toLocaleString()}</td>
+                            <td>{player.timePlayed}</td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        {/if}
+    {:catch}
+        <div class="loading">
+            <p>Failed to load scores.</p>
+        </div>
+    {/await}
 </div>
 
 <style>
+    .loading {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .loading p {
+        color: #fff;
+        font-size: 1.5rem;
+        text-shadow: 2px 2px 0px #000;
+    }
+
+    .dots {
+        display: inline-block;
+        animation: blink 1.2s steps(3, end) infinite;
+        width: 1.5em;
+        text-align: left;
+    }
+
+    @keyframes blink {
+        33%  { opacity: 0.3; }
+        66%  { opacity: 0.6; }
+        100% { opacity: 1; }
+    }
+
+    /* keep all your existing styles below unchanged */
     .leaderboard {
         width: 100%;
         height: 100%;
@@ -48,7 +89,14 @@
         box-sizing: border-box;
         overflow-y: auto;
         background-image: url('/homegrassbg.png');
-        background-size: 100% 100%;
+        background-repeat: repeat-x;
+        background-size: auto 100%;
+        animation: slide-bg 20s linear infinite;
+    }
+
+    @keyframes slide-bg {
+        from { background-position: 0% 0%; }
+        to   { background-position-x: 1628px; }
     }
 
     .back-btn {
@@ -102,30 +150,16 @@
         background: rgba(26, 26, 46, 0.75);
     }
 
-    /* Top 3 rows */
     tr.top-three td {
         background: rgba(26, 26, 46, 0.75);
         color: #ffe033;
     }
 
-    .rank {
-        font-size: 1rem;
-    }
+    .rank { font-size: 1rem; }
+    .name { text-align: left; padding-left: 0.6rem; }
+    .score { color: #4caf50; }
+    tr.top-three .score { color: #ffe033; }
 
-    .name {
-        text-align: left;
-        padding-left: 0.6rem;
-    }
-
-    .score {
-        color: #4caf50;
-    }
-
-    tr.top-three .score {
-        color: #ffe033;
-    }
-
-    /* Alternating rows */
     tbody tr:nth-child(even) td {
         background: rgba(26, 26, 46, 0.9);
     }
