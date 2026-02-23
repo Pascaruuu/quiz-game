@@ -1,5 +1,5 @@
 // import { fileURLToPath } from 'node:url';
-import rawDeck from '../../static/decks/n3vocab.txt?raw';
+import rawDeck from './data/n3vocab.txt?raw';
 
 export interface AnkiCard {
   id: number;
