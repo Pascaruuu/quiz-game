@@ -14,6 +14,10 @@
         transitioning = true;
         setTimeout(() => goto('/game'), 1800);
     }
+
+    function changeName() {
+        window.location.reload();
+    }
 </script>
 
 <svelte:head>
@@ -26,6 +30,7 @@
     <div class="menu">
         <button class="btn" onclick={playAndTransition}>▶ Play (30s)</button>
         <a href="/leaderboard" class="btn">🏆 Leaderboard</a>
+        <button class="btn" onclick={changeName}>✏️ Change Name</button>
     </div>
 </div>
 
@@ -78,10 +83,11 @@
 
     .menu {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 1rem;
         width: 100%;
         align-items: center;
+        justify-content: center;
     }
 
     .btn {
