@@ -1,6 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export interface AnkiCard {
   id: number;
@@ -17,7 +17,7 @@ function parseTsvLine(line: string): string[] {
     const ch = line[i];
     if (ch === '"') {
       if (inQuotes && line[i + 1] === '"') {
-        current += '"'; // escaped quote
+        current += '"';
         i++;
       } else {
         inQuotes = !inQuotes;
@@ -52,8 +52,8 @@ export function parseAnkiDeck(
   limit?: number,
   randomize: boolean = false
 ): AnkiCard[] {
-  const filePath = path.resolve(process.cwd(), 'static/decks', filename);
-  const raw = fs.readFileSync(filePath, 'utf-8');
+  const filePath = resolve(process.cwd(), 'static/decks', filename);
+  const raw = readFileSync(filePath, 'utf-8');
 
   const lines = raw.split('\n').filter(line => !line.startsWith('#') && line.trim());
 
