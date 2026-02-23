@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { parseAnkiDeck } from '$lib/ankiParser';
+import { parseAnkiDeck } from '$lib/server/ankiParser';
 import type { RequestEvent } from '@sveltejs/kit';
 
 function getKanji(str: string): Set<string> {
