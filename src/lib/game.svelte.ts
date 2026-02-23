@@ -1,4 +1,5 @@
 import { GAME_CONFIG } from './gameConfig';
+import { playAttack, playHurt } from './audio';
 
 export interface Question {
   id: number;
@@ -90,12 +91,13 @@ export function createGame() {
       const multiplier = getMultiplier(combo);
       pointsEarned = Math.round(pointsPerCorrect * multiplier);
       score += pointsEarned;
+      playAttack();
     } else {
-      // Penalty: lose half base points, min score 0
       const penalty = Math.round(pointsPerCorrect * 0.5);
       pointsEarned = -penalty;
       score = Math.max(0, score - penalty);
-      combo = 0; // reset combo on wrong answer
+      combo = 0;
+      playHurt(); 
     }
 
     results.push({

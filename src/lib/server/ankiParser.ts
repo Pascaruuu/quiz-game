@@ -52,7 +52,7 @@ export function parseAnkiDeck(
   limit?: number,
   randomize: boolean = false
 ): AnkiCard[] {
-  const filePath = path.resolve('static/decks', filename);
+  const filePath = path.resolve(process.cwd(), 'static/decks', filename);
   const raw = fs.readFileSync(filePath, 'utf-8');
 
   const lines = raw.split('\n').filter(line => !line.startsWith('#') && line.trim());
