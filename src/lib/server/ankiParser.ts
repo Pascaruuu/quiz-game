@@ -1,6 +1,5 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+// import { fileURLToPath } from 'node:url';
+import rawDeck from '../../static/decks/n3vocab.txt?raw';
 
 export interface AnkiCard {
   id: number;
@@ -42,20 +41,16 @@ function extractMeaning(html: string): string {
   for (const match of liMatches) {
     const text = match[1].replace(/<[^>]+>/g, '').trim();
     if (text) meanings.push(text);
-    if (meanings.length >= 3) break; // ← stop after 3
+    if (meanings.length >= 3) break;
   }
   return meanings.join('; ');
 }
 
 export function parseAnkiDeck(
-  filename: string = 'n3vocab.txt',
   limit?: number,
   randomize: boolean = false
 ): AnkiCard[] {
-  const filePath = resolve(process.cwd(), 'static/decks', filename);
-  const raw = readFileSync(filePath, 'utf-8');
-
-  const lines = raw.split('\n').filter(line => !line.startsWith('#') && line.trim());
+  const lines = rawDeck.split('\n').filter(line => !line.startsWith('#') && line.trim());
 
   let id = 1;
   const cards: AnkiCard[] = lines
@@ -72,11 +67,4 @@ export function parseAnkiDeck(
 
   if (randomize) cards.sort(() => Math.random() - 0.5);
   return limit ? cards.slice(0, limit) : cards;
-}
-
-// Self-test
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const sample = parseAnkiDeck('n3vocab.txt', 10, true);
-  console.log(`Loaded ${sample.length} cards (sample of 10):\n`);
-  sample.forEach((c) => console.log(`[${c.id}] ${c.japanese} → ${c.meaning}`));
 }

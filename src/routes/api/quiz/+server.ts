@@ -31,7 +31,7 @@ export const GET = ({ url }: RequestEvent) => {
   const limit   = Number(url.searchParams.get('limit')) || 15;
   const shuffle = url.searchParams.get('shuffle') !== 'false';
 
-  const allCards = parseAnkiDeck('n3vocab.txt', undefined, shuffle);
+  const allCards = parseAnkiDeck(undefined, shuffle);
   const selected = allCards.slice(0, limit);
 
   const questions = selected.map((card) => {
