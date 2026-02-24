@@ -25,7 +25,7 @@ export function createGame() {
   let isLoading = $state(false);
   let results = $state<Result[]>([]);
   let combo = $state(0);
-  let streakHistory = $state<number[]>([]);
+  let streakHistory = $state([] as number[]);
   let timerInterval: ReturnType<typeof setInterval> | null = null;
   let savedUsername = $state('');
   let gameToken = $state('');
@@ -54,6 +54,7 @@ export function createGame() {
     isGameOver = false;
     results = [];
     combo = 0;
+    streakHistory = [];
     timeLeft = GAME_CONFIG.INITIAL_TIME;
     const response = await fetch(`/api/quiz?limit=${GAME_CONFIG.TOTAL_QUESTIONS_LIMIT}`);
     const data = await response.json();
@@ -127,12 +128,6 @@ export function createGame() {
   async function endGame() {
     isGameOver = true;
     if (timerInterval) clearInterval(timerInterval);
-
-    // Record the final streak if the game ended while on a roll
-    if (combo >= 2) {
-      streakHistory.push(combo);
-    }
-
     await autoSaveScore();
   }
 

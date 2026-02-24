@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { saveScore } from '$lib/server/db_controller';
 import type { RequestEvent } from '@sveltejs/kit';
+import { GAME_CONFIG } from '$lib/gameConfig';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '$env/static/private';
 
@@ -11,7 +12,7 @@ export const POST = async ({ request, getClientAddress }: RequestEvent) => {
   // Rate limit check
   const ip = getClientAddress();
   const last = submissions.get(ip) ?? 0;
-  if (Date.now() - last < 30000) { //30s cooldown
+  if (Date.now() - last <= 30000) { //30s cooldown
     return json({ error: 'Too many submissions' }, { status: 429 });
   }
   submissions.set(ip, Date.now());
@@ -36,7 +37,7 @@ export const POST = async ({ request, getClientAddress }: RequestEvent) => {
 
   // anti-cheat: logic validation
   let serverCalculatedScore = 0;
-  const pointsPerCorrect = 100;
+  const pointsPerCorrect = GAME_CONFIG.POINTS_PER_CORRECT;
   const penalty = Math.round(pointsPerCorrect * 0.5);
 
   // Replay the game logic based on the streak status array
