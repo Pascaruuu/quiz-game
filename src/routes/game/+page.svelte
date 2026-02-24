@@ -253,6 +253,23 @@
     color: #fff;
     font-size: 1.5rem;
     line-height: 1.8;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+  .question-box p {
+    font-size: clamp(0.5rem, 1.2vw, 1.8rem);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    text-align: center;
+    margin: 0;
+    padding: 0.2rem;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   /* Options grid (right ~45% of bottom bar) */
