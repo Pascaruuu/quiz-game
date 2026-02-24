@@ -1,6 +1,8 @@
 import { json } from '@sveltejs/kit';
 import { parseAnkiDeck } from '$lib/server/ankiParser';
 import type { RequestEvent } from '@sveltejs/kit';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '$env/static/private';
 
 function getKanji(str: string): Set<string> {
   return new Set([...str].filter(ch => ch >= '\u4e00' && ch <= '\u9fff'));
@@ -34,6 +36,19 @@ export const GET = ({ url }: RequestEvent) => {
   const allCards = parseAnkiDeck(undefined, shuffle);
   const selected = allCards.slice(0, limit);
 
+  const sessionId = crypto.randomUUID();
+
+  // --- NEW: Generate JWT ---
+  const gameToken = jwt.sign(
+    { 
+      count: selected.length, 
+      sessionId, // Unique identifier for this game session
+      iat: Math.floor(Date.now() / 1000) // Issued at time for expiration checks
+    }, 
+    JWT_SECRET, 
+    { expiresIn: '32s' } // 30s + 2s for buffer
+  );
+
   const questions = selected.map((card) => {
     const cardCategory = getCategory(card.meaning);
     const cardKanji    = getKanji(card.japanese);
@@ -64,5 +79,5 @@ export const GET = ({ url }: RequestEvent) => {
     };
   });
 
-  return json({ questions });
+  return json({ questions, gameToken });
 };
