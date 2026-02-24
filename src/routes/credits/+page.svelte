@@ -10,6 +10,7 @@
                 "Score logic",
                 "UI/UX Design",
                 "Visual & Audio Design",
+                "API security",
                 "Deployment"
             ]
         },
