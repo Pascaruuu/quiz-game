@@ -6,6 +6,7 @@
   import type { PageData } from './$types';
   import { playFightSfx } from '$lib/audio';
   
+  
   let { data } = $props<{ data: PageData }>();
   let transitioning = $state(false);
 
@@ -425,5 +426,10 @@
     background: #ffe033;
     color: #1a1a2e;
     border-color: #1a1a2e;
+  }
+
+  .replay-btn:hover {
+    background: #918128;
+    color: #fff;
   }
 </style>

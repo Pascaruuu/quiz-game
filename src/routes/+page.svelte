@@ -28,9 +28,10 @@
     <h1>日本語 <br> Quiz Game</h1>
     <p class="welcome">ようこそ, {data.userName}!</p>
     <div class="menu">
-        <button class="btn" onclick={playAndTransition}>▶ Play (30s)</button>
+        <button class="playbtn" onclick={playAndTransition}>▶ Play (30s)</button>
         <a href="/leaderboard" class="btn">🏆 Leaderboard</a>
         <button class="btn" onclick={changeName}>✏️ Change Name</button>
+        <a href="/credits" class="btn">👥 Credits</a>
     </div>
 </div>
 
@@ -112,5 +113,29 @@
         box-shadow: 2px 2px 0px #000;
         background: #4D4D4D;
         color: #F8F8F8;
+    }
+
+    .playbtn {
+        background: #ffe033;
+        color: #1a1a2e;
+        display: block;
+        width: 20%;
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+        border: 3px solid #1a1a2e;
+        font-size: 1rem;
+        text-align: center;
+        image-rendering: pixelated;
+        box-shadow: 4px 4px 0px #000;
+        transition: transform 0.1s, box-shadow 0.1s;
+        cursor: pointer;
+        font-family: 'Press Start 2P', monospace;
+    }
+
+        .playbtn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0px #000;
+        background: #918128;
+        color: #fff;
     }
 </style>
