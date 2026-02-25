@@ -25,8 +25,10 @@ export function createGame() {
   let isLoading = $state(false);
   let results = $state<Result[]>([]);
   let combo = $state(0);
+  let streakHistory = $state([] as number[]);
   let timerInterval: ReturnType<typeof setInterval> | null = null;
   let savedUsername = $state('');
+  let gameToken = $state('');
 
   let blueSprite = $state('bluestand');
   let redSprite  = $state('redstand');
@@ -52,10 +54,12 @@ export function createGame() {
     isGameOver = false;
     results = [];
     combo = 0;
+    streakHistory = [];
     timeLeft = GAME_CONFIG.INITIAL_TIME;
     const response = await fetch(`/api/quiz?limit=${GAME_CONFIG.TOTAL_QUESTIONS_LIMIT}`);
     const data = await response.json();
     questions = data.questions;
+    gameToken = data.gameToken; // Store the JWT for later validation
     isLoading = false;
     startGame();
   }
@@ -100,6 +104,10 @@ export function createGame() {
       playHurt(); 
     }
 
+    // RECORD STATUS: Push the combo state for THIS specific question
+    // If correct, it's the new combo; if wrong, it's 0.
+    streakHistory.push(combo);
+
     results.push({
       meaning: currentQuestion.meaning,
       answer: currentQuestion.answer,
@@ -128,7 +136,14 @@ export function createGame() {
       await fetch('/api/scores', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: savedUsername, score })
+        body: JSON.stringify({ 
+          username: savedUsername, 
+          result: {
+            score,
+            allStreaks: streakHistory // Sending the array [3, 2, 5]
+          },
+          token: gameToken 
+        }) // Include JWT for validation
       });
     } catch (err) {
       console.error('Auto-save failed:', err);
