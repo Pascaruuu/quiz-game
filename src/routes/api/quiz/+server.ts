@@ -46,7 +46,7 @@ export const GET = ({ url }: RequestEvent) => {
       iat: Math.floor(Date.now() / 1000) // Issued at time for expiration checks
     }, 
     JWT_SECRET, 
-    { expiresIn: '32s' } // 30s + 2s for buffer
+    { expiresIn: '35s' } // 30s + 5s for buffer
   );
 
   const questions = selected.map((card) => {
