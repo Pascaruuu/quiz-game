@@ -21,7 +21,8 @@
                 "Frontend Architecture",
                 "Screen Implementation",
                 "Game Logic",
-                "Leaderboard Logic"
+                "Leaderboard Logic",
+                "JWT Security"
             ]
         },
         {
