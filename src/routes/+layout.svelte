@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '../app.css';
   import { onMount } from 'svelte';
   import { goto, invalidateAll } from '$app/navigation';
   import { page } from '$app/stores';
@@ -125,19 +126,6 @@ onMount(() => {
 {/if}
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-  :global(*) {
-    font-family: 'Press Start 2P', monospace;
-    box-sizing: border-box;
-  }
-
-  :global(body) {
-    margin: 0;
-    padding: 0;
-    background: #000;
-  }
-
   /* ── Loading Cover ── */
   .loading-cover {
     width: 100vw;
@@ -148,6 +136,7 @@ onMount(() => {
     background: #000;
   }
 
+  /* ── Mute Button ── */
   .mute-btn {
     position: absolute;
     top: 2%;
@@ -158,9 +147,9 @@ onMount(() => {
     padding: 0;
     cursor: pointer;
     pointer-events: auto;
-    width: 80px;
-    height: 80px;
-    transition: transform 0.1s, box-shadow 0.1s;
+    width: clamp(32px, 5vw, 80px);
+    height: clamp(32px, 5vw, 80px);
+    transition: transform 0.1s;
     image-rendering: pixelated;
   }
 
@@ -171,7 +160,7 @@ onMount(() => {
   }
 
   .mute-btn.pressed {
-    transform: translate(3px, 3px); /* ← pushed down effect */
+    transform: translate(3px, 3px);
   }
 
   /* ── Start Screen ── */
@@ -179,48 +168,51 @@ onMount(() => {
     width: 100%;
     height: 100%;
     background-image: url('/homegrassbg.png');
-    background-repeat: repeat-x;
     background-size: auto 100%;
+    background-repeat: repeat-x;
     animation: slide-bg 40s linear infinite;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
-    padding: 2rem;
+    gap: clamp(0.8rem, 3vh, 2rem);
+    padding: clamp(1rem, 4vh, 3rem) clamp(0.5rem, 2vw, 2rem);
     text-align: center;
+    overflow: hidden;
   }
 
   @keyframes slide-bg {
-    from { background-position: 0% 0%; }
+    from { background-position-x: 0px; }
     to   { background-position-x: 1920px; }
   }
 
   .start-screen h1 {
-    font-size: 4rem;
-    line-height: 1.5;
+    font-size: clamp(1rem, 4vw, 4rem);
+    line-height: 1.8; /* ← more breathing room between the two lines */
     color: #fff;
-    text-shadow: 4px 4px 0px #000;
-    -webkit-text-stroke: 2px #000;
+    text-shadow: clamp(1px, 0.3vw, 4px) clamp(1px, 0.3vw, 4px) 0px #000;
+    -webkit-text-stroke: clamp(0.5px, 0.15vw, 2px) #000;
+    margin: 0 0 clamp(0.2rem, 1vh, 0.8rem) 0; /* ← gap under title */
   }
 
   .start-screen p {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: clamp(0.5rem, 1.5vw, 1.5rem);
     color: #fff;
-    text-shadow: 3px 3px 0px #000;
-    -webkit-text-stroke: 2px #000;
+    text-shadow: clamp(1px, 0.2vw, 3px) clamp(1px, 0.2vw, 3px) 0px #000;
+    -webkit-text-stroke: clamp(0.3px, 0.1vw, 2px) #000;
+    margin: 0 0 clamp(0.2rem, 1vh, 0.5rem) 0; /* ← gap under prompt text */
   }
 
   .start-screen input {
     background: #000;
-    border: 3px solid #4D4D4D;
+    border: clamp(1px, 0.2vw, 3px) solid #4D4D4D;
     color: #fff;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    width: 280px;
+    padding: clamp(0.4rem, 1vh, 0.75rem) clamp(0.5rem, 1.5vw, 1rem); /* ← more inner padding */
+    font-size: clamp(0.4rem, 1vw, 1rem);
+    width: clamp(140px, 25vw, 280px);
     text-align: center;
     outline: none;
+    font-family: 'Press Start 2P', monospace;
   }
 
   .start-screen input::placeholder {
@@ -229,13 +221,15 @@ onMount(() => {
 
   .start-screen button {
     background: #F8F8F8;
-    border: 3px solid #4D4D4D;
+    border: clamp(1px, 0.2vw, 3px) solid #4D4D4D;
     color: #4D4D4D;
-    padding: 0.75rem 2rem;
-    font-size: 0.65rem;
+    padding: clamp(0.4rem, 1vh, 0.75rem) clamp(1rem, 3vw, 2rem); /* ← more padding inside button */
+    font-size: clamp(0.3rem, 0.8vw, 0.65rem);
     cursor: pointer;
-    box-shadow: 4px 4px 0px #000;
-    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: clamp(1px, 0.3vw, 4px) clamp(1px, 0.3vw, 4px) 0px #000;
+    transition: transform 0.1s, box-shadow 0.1s, background 0.1s, color 0.1s;
+    font-family: 'Press Start 2P', monospace;
+    margin-top: clamp(0.2rem, 0.5vh, 0.5rem); /* ← small gap above button */
   }
 
   .start-screen button:hover {

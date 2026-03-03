@@ -61,7 +61,7 @@
 
     .loading p {
         color: #fff;
-        font-size: 1.5rem;
+        font-size: clamp(0.5rem, 1.5vw, 1.5rem);
         text-shadow: 2px 2px 0px #000;
     }
 
@@ -78,20 +78,20 @@
         100% { opacity: 1; }
     }
 
-    /* keep all your existing styles below unchanged */
     .leaderboard {
         width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0.8rem 0.5rem;
+        padding: clamp(0.3rem, 1vh, 0.8rem) clamp(0.5rem, 2vw, 2rem);
         box-sizing: border-box;
         overflow-y: auto;
         background-image: url('/homegrassbg.png');
         background-repeat: repeat-x;
         background-size: auto 100%;
-        animation: slide-bg 20s linear infinite;
+        animation: slide-bg 40s linear infinite;
+        gap: clamp(0.5rem, 1.5vh, 1.2rem);
     }
 
     @keyframes slide-bg {
@@ -101,15 +101,16 @@
 
     .back-btn {
         color: #4D4D4D;
-        font-size: 1.45rem;
+        font-size: clamp(0.4rem, 1.2vw, 1.45rem);
         text-decoration: none;
-        border: 3px solid #4D4D4D;
-        padding: 0.5rem 0.6rem 0.3rem 0.5rem;
-        box-shadow: 4px 4px 0px #000;
+        border: clamp(1px, 0.2vw, 3px) solid #4D4D4D;
+        padding: clamp(0.2rem, 0.5vh, 0.5rem) clamp(0.2rem, 0.5vw, 0.6rem);
+        box-shadow: clamp(1px, 0.3vw, 4px) clamp(1px, 0.3vw, 4px) 0px #000;
         background: #F8F8F8;
-        margin-top: 2rem;
-        margin-left: 5rem;
+        margin-top: clamp(0.5rem, 2vh, 2rem);
+        margin-left: clamp(1rem, 5vw, 5rem);
         align-self: flex-start;
+        transition: transform 0.1s, box-shadow 0.1s;
     }
 
     .back-btn:hover {
@@ -120,18 +121,20 @@
     }
 
     h1 {
-        font-size: 4rem;
+        font-size: clamp(1rem, 4vw, 4rem);
         text-align: center;
         line-height: 1.5;
         color: #fff;
-        text-shadow: 4px 4px 0px #000;
-        -webkit-text-stroke: 2px #000;
+        text-shadow: clamp(1px, 0.3vw, 4px) clamp(1px, 0.3vw, 4px) 0px #000;
+        -webkit-text-stroke: clamp(0.5px, 0.1vw, 2px) #000;
+        paint-order: stroke fill;
+        margin: clamp(0.2rem, 0.5vh, 0.5rem) 0;
     }
 
     table {
-        width: 90%;
+        width: 80%;
         border-collapse: collapse;
-        font-size: 1rem;
+        font-size: clamp(0.3rem, 1vw, 1rem);
     }
 
     thead tr {
@@ -140,13 +143,13 @@
     }
 
     th {
-        padding: 0.4rem 0.3rem;
+        padding: clamp(0.2rem, 0.4vh, 0.4rem) clamp(0.15rem, 0.3vw, 0.3rem);
         text-align: center;
-        border: 2px solid #4D4D4D;
+        border: clamp(1px, 0.15vw, 2px) solid #4D4D4D;
     }
 
     td {
-        padding: 0.4rem 0.3rem;
+        padding: clamp(0.2rem, 0.4vh, 0.4rem) clamp(0.15rem, 0.3vw, 0.3rem);
         text-align: center;
         border: 1px solid #4D4D4D;
         color: #fff;
@@ -158,8 +161,8 @@
         color: #ffe033;
     }
 
-    .rank { font-size: 1rem; }
-    .name { text-align: left; padding-left: 0.6rem; }
+    .rank { font-size: clamp(0.3rem, 1vw, 1rem); }
+    .name { text-align: left; padding-left: clamp(0.2rem, 0.6vw, 0.6rem); }
     .score { color: #4caf50; }
     tr.top-three .score { color: #ffe033; }
 
