@@ -288,7 +288,7 @@
     background: #F8F8F8;
     border: 2px solid #4D4D4D;
     color: #4D4D4D;
-    font-size: clamp(0.6rem, 1.5vw, 1.8rem); /* ← scales with viewport */
+    font-size: clamp(0.6rem, 1.5vw, 1.8rem);
     cursor: pointer;
     padding: 0.4rem;
     text-align: center;
