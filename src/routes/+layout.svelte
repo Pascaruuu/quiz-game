@@ -192,6 +192,7 @@ onMount(() => {
     color: #fff;
     text-shadow: clamp(1px, 0.3vw, 4px) clamp(1px, 0.3vw, 4px) 0px #000;
     -webkit-text-stroke: clamp(0.5px, 0.15vw, 2px) #000;
+    paint-order: stroke fill;
     margin: 0 0 clamp(0.2rem, 1vh, 0.8rem) 0; /* ← gap under title */
   }
 
