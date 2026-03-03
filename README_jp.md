@@ -7,7 +7,7 @@
 ## Live URL
 
 このゲームのプロジェクトはバーセルでデプロイられました：
-https://quiz-game-hsl7ci04k-pascaruuus-projects.vercel.app/
+https://quiz-game-hsl7ci04k-pascaruuus-projects.vercel.app/ 
 
 ## 前提条件
 
@@ -17,7 +17,6 @@ https://quiz-game-hsl7ci04k-pascaruuus-projects.vercel.app/
 ## データベースのセットアップ
 
 プロジェクトを実行するように：
-
 1. Tursoアカウントを作成する
 2. プロジェクトの利用ため、データベースを作成する
 3. 0000_magenta_storm.sqlというファイルであるQueryを使って、テーブルを作成する

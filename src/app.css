@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+JP:wght@900&display=swap');
 
 * {
-	font-family: 'Press Start 2P', 'Noto Sans JP', monospace;
-	font-weight: 400;
-	box-sizing: border-box;
+  font-family: 'Press Start 2P', 'Noto Sans JP', monospace;
+  font-weight: 400;
+  box-sizing: border-box;
 }
 
 /* Japanese characters inherit Noto Sans JP weight 900 */
-:lang(ja),
+:lang(ja), 
 .jp {
-	font-family: 'Noto Sans JP', monospace;
-	font-weight: 900;
+  font-family: 'Noto Sans JP', monospace;
+  font-weight: 900;
 }
 
 body {
-	margin: 0;
-	padding: 0;
-	background: #000;
+  margin: 0;
+  padding: 0;
+  background: #000;
 }
