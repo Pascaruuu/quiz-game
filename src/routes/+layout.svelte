@@ -201,6 +201,7 @@ onMount(() => {
     color: #fff;
     text-shadow: clamp(1px, 0.2vw, 3px) clamp(1px, 0.2vw, 3px) 0px #000;
     -webkit-text-stroke: clamp(0.3px, 0.1vw, 2px) #000;
+    paint-order: stroke fill;
     margin: 0 0 clamp(0.2rem, 1vh, 0.5rem) 0; /* ← gap under prompt text */
   }
 
