@@ -1,7 +1,7 @@
 <script lang="ts">
     const members = [
         {
-            name: "Pascal - パスカル",
+            name: "Pascal パスカル",
             role: "Leader",
             contributions: [
                 "Environment Setup",
@@ -15,7 +15,7 @@
             ]
         },
         {
-            name: "Vicheka - ヴェチェカ",
+            name: "Vicheka ヴェチェカ",
             role: "Sub-Leader",
             contributions: [
                 "Frontend Architecture",
@@ -26,7 +26,7 @@
             ]
         },
         {
-            name: "Veansna - ヴィスナ",
+            name: "Veansna ヴィスナ",
             role: "Member",
             contributions: [
                 "Database Design",
@@ -56,14 +56,14 @@
                 </ul>
             </div>
         {/each}
-    </div>
-    <div class="sources">
-        <h2>Assets</h2>
-        <ul>
-            <li>Battle BGM: <a href="https://youtu.be/5bn3Jmvep1k" target="_blank">8-Bit Fantasy & Adventure Music — xDeviruchi</a></li>
-            <li>Home BGM: <a href="https://youtu.be/D5L36JDKxR0" target="_blank">A Lonely Cherry Tree 🌸 — Pix</a></li>
-            <li>Sprites: Original artwork inspired by <a href="https://nextmake.site/" target="_blank">NextMake's</a> mascot</li>
-        </ul>
+        <div class="card sources">
+            <h2>Assets</h2>
+            <ul>
+                <li>Battle BGM: <a href="https://youtu.be/5bn3Jmvep1k" target="_blank">8-Bit Fantasy & Adventure Music — xDeviruchi</a></li>
+                <li>Home BGM: <a href="https://youtu.be/D5L36JDKxR0" target="_blank">A Lonely Cherry Tree 🌸 — Pix</a></li>
+                <li>Sprites: Original artwork inspired by <a href="https://nextmake.site/" target="_blank">NextMake's</a> mascot</li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -76,30 +76,31 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0.8rem 0.5rem;
+        padding: clamp(0.3rem, 1vh, 0.8rem) clamp(0.5rem, 2vw, 2rem);
         box-sizing: border-box;
         overflow-y: auto;
         background-image: url('/homegrassbg.png');
         background-repeat: repeat-x;
         background-size: auto 100%;
-        animation: slide-bg 20s linear infinite;
+        animation: slide-bg 40s linear infinite;
+        gap: clamp(0.5rem, 1.5vh, 1.2rem);
     }
 
-    @keyframes slide-bg {
-        from { background-position: 0% 0%; }
+        @keyframes slide-bg {
+        from { background-position: 0px; }
         to   { background-position-x: 1920px; }
     }
 
     .back-btn {
         color: #4D4D4D;
-        font-size: 1.45rem;
+        font-size: clamp(0.4rem, 1.2vw, 1.45rem);
         text-decoration: none;
-        border: 3px solid #4D4D4D;
-        padding: 0.5rem 0.6rem 0.3rem 0.5rem;
-        box-shadow: 4px 4px 0px #000;
+        border: clamp(1px, 0.2vw, 3px) solid #4D4D4D;
+        padding: clamp(0.2rem, 0.6vh, 0.5rem) clamp(0.3rem, 0.8vw, 0.8rem);
+        box-shadow: clamp(1px, 0.3vw, 4px) clamp(1px, 0.3vw, 4px) 0px #000;
         background: #F8F8F8;
-        margin-top: 2rem;
-        margin-left: 5rem;
+        margin-top: clamp(0.5rem, 2vh, 2rem);
+        margin-left: clamp(1rem, 5vw, 5rem);
         align-self: flex-start;
         transition: transform 0.1s, box-shadow 0.1s;
     }
@@ -112,47 +113,49 @@
     }
 
     h1 {
-        font-size: 4rem;
+        font-size: clamp(1rem, 4vw, 4rem);
         text-align: center;
-        line-height: 0.7;
+        line-height: 1.5;
         color: #fff;
-        text-shadow: 4px 4px 0px #000;
-        -webkit-text-stroke: 2px #000;
+        text-shadow: clamp(1px, 0.3vw, 4px) clamp(1px, 0.3vw, 4px) 0px #000;
+        -webkit-text-stroke: clamp(0.5px, 0.1vw, 2px) #000;
+        paint-order: stroke fill;
+        margin: 0;
     }
 
     .members {
-        display: flex;
-        flex-direction: row;
-        gap: 1.5rem;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(0.4rem, 1.2vw, 1.5rem);
         width: 90%;
-        justify-content: center;
-        flex-wrap: wrap;
-        padding: 1rem 0;
+        padding: 0 clamp(0.3rem, 1vw, 1rem);
+        margin-bottom: clamp(0.5rem, 1.5vh, 1.5rem); 
     }
 
     .card {
         background: rgba(26, 26, 46, 0.75);
-        border: 2px solid #4D4D4D;
-        width: 30%;
-        min-width: 200px;
+        border: clamp(1px, 0.15vw, 2px) solid #4D4D4D;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.6rem;
+        gap: clamp(0.3rem, 0.6vh, 0.6rem);
         text-align: center;
-        padding: 1rem;
+        padding: clamp(0.5rem, 1.2vh, 1.2rem) clamp(0.4rem, 1vw, 1rem);
+        box-sizing: border-box;
     }
 
     .card h2 {
-        font-size: 1rem;
+        font-size: clamp(0.4rem, 1vw, 1rem);
         color: #fff;
         text-shadow: 2px 2px 0px #000;
+        margin: 0 0 clamp(0.1rem, 0.3vh, 0.3rem) 0; 
     }
 
     .role {
-        font-size: 1rem;
+        font-size: clamp(0.4rem, 1vw, 1rem);
         color: #4caf50;
         text-shadow: 1px 1px 0px #000;
+        margin: 0 0 clamp(0.2rem, 0.5vh, 0.5rem) 0;
     }
 
     ul {
@@ -161,50 +164,21 @@
         margin: 0;
         display: flex;
         flex-direction: column;
-        gap: 0.4rem;
+        gap: clamp(0.15rem, 0.4vh, 0.4rem);
         width: 100%;
     }
 
     li {
-        font-size: 0.7rem;
+        font-size: clamp(0.3rem, 0.7vw, 0.7rem);
         color: #fff;
         border: 1px solid #4D4D4D;
         background: rgba(26, 26, 46, 0.9);
-        padding: 0.3rem 0.5rem;
+        padding: clamp(0.2rem, 0.4vh, 0.4rem) clamp(0.3rem, 0.6vw, 0.6rem);
         text-align: left;
     }
-    
+
     .sources {
-        width: 85%;
-        margin-top: 1rem;
-        background: rgba(26, 26, 46, 0.75);
-        border: 2px solid #4D4D4D;
-        padding: 1rem;
-    }
-
-    .sources h2 {
-        font-size: 1rem;
-        color: #fff;
-        text-shadow: 2px 2px 0px #000;
-        margin-bottom: 0.8rem;
-        text-align: center;
-    }
-
-    .sources ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-    }
-
-    .sources li {
-        font-size: 0.7rem;
-        color: #fff;
-        border: 1px solid #4D4D4D;
-        background: rgba(26, 26, 46, 0.9);
-        padding: 0.3rem 0.5rem;
+        grid-column: 1 / -1;
     }
 
     .sources a {
@@ -214,5 +188,15 @@
 
     .sources a:hover {
         text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+        .members {
+            grid-template-columns: 1fr;
+        }
+
+        .sources {
+            grid-column: 1;
+        }
     }
 </style>
