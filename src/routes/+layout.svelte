@@ -256,13 +256,16 @@ onMount(() => {
     background-size: 100% 100%;
     z-index: 2;
     pointer-events: none;
+    top: -9%;
+    bottom: -10%;
+    height: 115%;
   }
 
-  .screen-content {
+.screen-content {
     position: absolute;
     width: 75.3%;
-    height: 74.5%;
-    top: 13.8%;
+    height: 86%;
+    top: 6.7%;
     left: 12.5%;
     z-index: 1;
     overflow: hidden;
