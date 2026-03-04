@@ -29,7 +29,7 @@ function getCategory(meaning: string): string {
   return 'general';
 }
 
-export const GET = ({ url }: RequestEvent) => {
+export const GET = ({ url , cookies }: RequestEvent) => {
   const limit   = Number(url.searchParams.get('limit')) || 15;
   const shuffle = url.searchParams.get('shuffle') !== 'false';
 
@@ -43,11 +43,19 @@ export const GET = ({ url }: RequestEvent) => {
     { 
       count: selected.length, 
       sessionId, // Unique identifier for this game session
-      iat: Math.floor(Date.now() / 1000) // Issued at time for expiration checks
+      iat: Math.floor(Date.now() / 1000), // Issued at time for expiration checks
     }, 
     JWT_SECRET, 
     { expiresIn: '35s' } // 30s + 5s for buffer
   );
+
+  cookies.set('game_auth', gameToken, {
+    path: '/',               // Accessible across the site
+    httpOnly: true,          // Prevents JS access (XSS protection)
+    secure: true,            // Only sent over HTTPS (production)
+    sameSite: 'strict',      // Prevents CSRF
+    maxAge: 35               // Match JWT expiration (in seconds)
+  });
 
   const questions = selected.map((card) => {
     const cardCategory = getCategory(card.meaning);
@@ -79,5 +87,5 @@ export const GET = ({ url }: RequestEvent) => {
     };
   });
 
-  return json({ questions, gameToken });
+  return json({ questions });
 };
