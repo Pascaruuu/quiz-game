@@ -1,34 +1,34 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import type { Snippet } from 'svelte';
+	import { onMount } from 'svelte'
+	import type { Snippet } from 'svelte'
 
 	interface Props {
-		src?: string;
-		speed?: number;
-		class?: string;
-		children?: Snippet;
+		src?: string
+		speed?: number
+		class?: string
+		children?: Snippet
 	}
 
-	let { src = '/homegrassbg.png', speed = 0.5, class: className = '', children }: Props = $props();
+	let { src = '/homegrassbg.png', speed = 0.5, class: className = '', children }: Props = $props()
 
-	let bgPos = $state(0);
-	let animFrame: number;
+	let bgPos = $state(0)
+	let animFrame: number
 
 	onMount(() => {
-		const img = new Image();
-		img.src = src;
+		const img = new Image()
+		img.src = src
 		img.onload = () => {
-			const renderedWidth = (img.width / img.height) * window.innerHeight;
+			const renderedWidth = (img.width / img.height) * window.innerHeight
 
 			function animate() {
-				bgPos = (bgPos + speed) % renderedWidth;
-				animFrame = requestAnimationFrame(animate);
+				bgPos = (bgPos + speed) % renderedWidth
+				animFrame = requestAnimationFrame(animate)
 			}
-			animate();
-		};
+			animate()
+		}
 
-		return () => cancelAnimationFrame(animFrame);
-	});
+		return () => cancelAnimationFrame(animFrame)
+	})
 </script>
 
 <div

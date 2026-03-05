@@ -1,44 +1,44 @@
 <script lang="ts">
-import { resolve } from '$app/paths';
-    const members = [
-        {
-            name: "Pascal パスカル",
-            role: "Leader",
-            contributions: [
-                "Environment Setup",
-                "API Development",
-                "Anki Deck Integration",
-                "Score logic",
-                "UI/UX Design",
-                "Visual & Audio Design",
-                "API security",
-                "Deployment"
-            ]
-        },
-        {
-            name: "Vicheka ヴェチェカ",
-            role: "Sub-Leader",
-            contributions: [
-                "Frontend Architecture",
-                "Screen Implementation",
-                "Game Logic",
-                "Leaderboard Logic",
-                "JWT Security"
-            ]
-        },
-        {
-            name: "Veansna ヴィスナ",
-            role: "Member",
-            contributions: [
-                "Database Design",
-                "Database Management",
-                "Score System",
-                "Score Logic",
-                "Frontend/Backend Integration",
-                "Leaderboard Implementation"
-            ]
-        }
-    ];
+	import { resolve } from '$app/paths'
+	const members = [
+		{
+			name: 'Pascal パスカル',
+			role: 'Leader',
+			contributions: [
+				'Environment Setup',
+				'API Development',
+				'Anki Deck Integration',
+				'Score logic',
+				'UI/UX Design',
+				'Visual & Audio Design',
+				'API security',
+				'Deployment',
+			],
+		},
+		{
+			name: 'Vicheka ヴェチェカ',
+			role: 'Sub-Leader',
+			contributions: [
+				'Frontend Architecture',
+				'Screen Implementation',
+				'Game Logic',
+				'Leaderboard Logic',
+				'JWT Security',
+			],
+		},
+		{
+			name: 'Veansna ヴィスナ',
+			role: 'Member',
+			contributions: [
+				'Database Design',
+				'Database Management',
+				'Score System',
+				'Score Logic',
+				'Frontend/Backend Integration',
+				'Leaderboard Implementation',
+			],
+		},
+	]
 </script>
 
 <div class="credits">

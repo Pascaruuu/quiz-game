@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import { resolve } from '$app/paths';
+	import type { PageData } from './$types'
+	import { resolve } from '$app/paths'
 
-	let { data } = $props<{ data: PageData }>();
+	let { data } = $props<{ data: PageData }>()
 </script>
 
 <div class="leaderboard">

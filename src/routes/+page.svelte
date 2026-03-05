@@ -1,22 +1,22 @@
 <!-- home page -->
 <script lang="ts">
-	import type { PageData } from './$types';
-	import { resolve } from '$app/paths';
-	import { goto } from '$app/navigation';
-	import FlashTransition from '$lib/components/FlashTransition.svelte';
-	import { playFightSfx } from '$lib/audio';
+	import type { PageData } from './$types'
+	import { resolve } from '$app/paths'
+	import { goto } from '$app/navigation'
+	import FlashTransition from '$lib/components/FlashTransition.svelte'
+	import { playFightSfx } from '$lib/audio'
 
-	let { data }: { data: PageData } = $props();
-	let transitioning = $state(false);
+	let { data }: { data: PageData } = $props()
+	let transitioning = $state(false)
 
 	function playAndTransition() {
-		playFightSfx();
-		transitioning = true;
-		setTimeout(() => goto(resolve('/game')), 1800);
+		playFightSfx()
+		transitioning = true
+		setTimeout(() => goto(resolve('/game')), 1800)
 	}
 
 	function changeName() {
-		window.location.reload();
+		window.location.reload()
 	}
 </script>
 
