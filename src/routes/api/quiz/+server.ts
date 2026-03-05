@@ -1,6 +1,8 @@
 import { json } from '@sveltejs/kit';
 import { parseAnkiDeck } from '$lib/server/ankiParser';
 import type { RequestEvent } from '@sveltejs/kit';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '$env/static/private';
 
 function getKanji(str: string): Set<string> {
 	return new Set([...str].filter((ch) => ch >= '\u4e00' && ch <= '\u9fff'));
@@ -29,17 +31,38 @@ function getCategory(meaning: string): string {
 	return 'general';
 }
 
-export const GET = ({ url }: RequestEvent) => {
-	const limit = Number(url.searchParams.get('limit')) || 15;
-	const shuffle = url.searchParams.get('shuffle') !== 'false';
+export const GET = ({ url , cookies }: RequestEvent) => {
+  const limit   = Number(url.searchParams.get('limit')) || 15;
+  const shuffle = url.searchParams.get('shuffle') !== 'false';
 
 	const allCards = parseAnkiDeck(undefined, shuffle);
 	const selected = allCards.slice(0, limit);
 
-	const questions = selected.map((card) => {
-		const cardCategory = getCategory(card.meaning);
-		const cardKanji = getKanji(card.japanese);
-		const hasKanji = cardKanji.size > 0;
+  const sessionId = crypto.randomUUID();
+
+  // --- NEW: Generate JWT ---
+  const gameToken = jwt.sign(
+    { 
+      count: selected.length, 
+      sessionId, // Unique identifier for this game session
+      iat: Math.floor(Date.now() / 1000), // Issued at time for expiration checks
+    }, 
+    JWT_SECRET, 
+    { expiresIn: '35s' } // 30s + 5s for buffer
+  );
+
+  cookies.set('game_auth', gameToken, {
+    path: '/',               // Accessible across the site
+    httpOnly: true,          // Prevents JS access (XSS protection)
+    secure: true,            // Only sent over HTTPS (production)
+    sameSite: 'strict',      // Prevents CSRF
+    maxAge: 35               // Match JWT expiration (in seconds)
+  });
+
+  const questions = selected.map((card) => {
+    const cardCategory = getCategory(card.meaning);
+    const cardKanji    = getKanji(card.japanese);
+    const hasKanji     = cardKanji.size > 0;
 
 		// Score other cards by similarity
 		const candidates = allCards
