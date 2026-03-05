@@ -1,4 +1,5 @@
 <script lang="ts">
+import { resolve } from '$app/paths';
     const members = [
         {
             name: "Pascal パスカル",
