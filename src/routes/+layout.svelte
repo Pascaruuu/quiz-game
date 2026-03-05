@@ -1,64 +1,64 @@
 <script lang="ts">
-	import '../app.css';
-	import { onMount } from 'svelte';
-	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { resolve } from '$app/paths';
-	import LoadingScreen from '$lib/components/LoadingScreen.svelte';
-	import { initAudio, playHomeBgm, playClick, toggleMute } from '$lib/audio';
+	import '../app.css'
+	import { onMount } from 'svelte'
+	import { goto, invalidateAll } from '$app/navigation'
+	import { page } from '$app/stores'
+	import { resolve } from '$app/paths'
+	import LoadingScreen from '$lib/components/LoadingScreen.svelte'
+	import { initAudio, playHomeBgm, playClick, toggleMute } from '$lib/audio'
 
-	let { children } = $props();
-	let started = $state(false);
-	let showLoading = $state(false);
-	let username = $state('');
+	let { children } = $props()
+	let started = $state(false)
+	let showLoading = $state(false)
+	let username = $state('')
 
-	let isMutedState = $state(false);
-	let mutePressed = $state(false);
+	let isMutedState = $state(false)
+	let mutePressed = $state(false)
 
 	function handleMute() {
-		isMutedState = toggleMute();
+		isMutedState = toggleMute()
 	}
 
 	onMount(() => {
-		const saved = document.cookie.match(/username=([^;]+)/)?.[1];
+		const saved = document.cookie.match(/username=([^;]+)/)?.[1]
 		if (saved) {
-			username = decodeURIComponent(saved);
+			username = decodeURIComponent(saved)
 		}
 
-		initAudio();
+		initAudio()
 
 		const unsubscribe = page.subscribe(($page) => {
 			if ($page.url.pathname !== '/game') {
-				playHomeBgm();
+				playHomeBgm()
 			}
-		});
+		})
 
 		function handleGlobalClick(e: MouseEvent) {
-			const target = e.target as HTMLElement;
+			const target = e.target as HTMLElement
 			if (target.closest('button') || target.closest('a')) {
-				playClick();
+				playClick()
 			}
 		}
 
-		document.addEventListener('click', handleGlobalClick);
+		document.addEventListener('click', handleGlobalClick)
 
 		return () => {
-			unsubscribe();
-			document.removeEventListener('click', handleGlobalClick);
-		};
-	});
+			unsubscribe()
+			document.removeEventListener('click', handleGlobalClick)
+		}
+	})
 
 	async function enterAndStart() {
-		if (!username.trim()) return;
-		document.cookie = `username=${encodeURIComponent(username)}; path=/`;
-		document.documentElement.requestFullscreen().catch(() => {});
-		playHomeBgm(); // ← trigger on first user gesture
-		showLoading = true;
-		await invalidateAll();
+		if (!username.trim()) return
+		document.cookie = `username=${encodeURIComponent(username)}; path=/`
+		document.documentElement.requestFullscreen().catch(() => {})
+		playHomeBgm() // ← trigger on first user gesture
+		showLoading = true
+		await invalidateAll()
 		setTimeout(() => {
-			started = true;
-			goto(resolve('/'));
-		}, 1500);
+			started = true
+			goto(resolve('/'))
+		}, 1500)
 	}
 </script>
 

@@ -1,5 +1,5 @@
-import type { PageServerLoad } from './$types';
-import { getLeaderboard } from '$lib/server/db_controller';
+import type { PageServerLoad } from './$types'
+import { getLeaderboard } from '$lib/server/db_controller'
 
 export const load: PageServerLoad = () => {
 	return {
@@ -8,8 +8,8 @@ export const load: PageServerLoad = () => {
 				rank: index + 1,
 				name: row.username,
 				score: row.score,
-				timePlayed: new Date(row.createdAt).toLocaleDateString()
-			}))
-		)
-	};
-};
+				timePlayed: new Date(row.createdAt).toLocaleDateString(),
+			})),
+		),
+	}
+}

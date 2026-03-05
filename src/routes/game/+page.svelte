@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { createGame } from '$lib/game.svelte';
-	import LoadingScreen from '$lib/components/LoadingScreen.svelte';
-	import FlashTransition from '$lib/components/FlashTransition.svelte';
-	import { onMount } from 'svelte';
-	import type { PageData } from './$types';
-	import { playFightSfx } from '$lib/audio';
-	import { resolve } from '$app/paths';
+	import { createGame } from '$lib/game.svelte'
+	import LoadingScreen from '$lib/components/LoadingScreen.svelte'
+	import FlashTransition from '$lib/components/FlashTransition.svelte'
+	import { onMount } from 'svelte'
+	import type { PageData } from './$types'
+	import { playFightSfx } from '$lib/audio'
+	import { resolve } from '$app/paths'
 
-	let { data } = $props<{ data: PageData }>();
-	let transitioning = $state(false);
+	let { data } = $props<{ data: PageData }>()
+	let transitioning = $state(false)
 
-	const game = createGame();
+	const game = createGame()
 
 	onMount(() => {
 		const sprites = [
@@ -19,22 +19,22 @@
 			'/chars/blue/bluehurt.png',
 			'/chars/red/redstand.png',
 			'/chars/red/redatk.png',
-			'/chars/red/redhurt.png'
-		];
+			'/chars/red/redhurt.png',
+		]
 		sprites.forEach((src) => {
-			const img = new Image();
-			img.src = src;
-		});
+			const img = new Image()
+			img.src = src
+		})
 
-		game.initGame(data.savedUsername);
-	});
+		game.initGame(data.savedUsername)
+	})
 
 	async function handleReplay() {
-		playFightSfx();
-		transitioning = true;
-		await new Promise((resolve) => setTimeout(resolve, 1800));
-		transitioning = false;
-		await game.initGame(data.savedUsername);
+		playFightSfx()
+		transitioning = true
+		await new Promise((resolve) => setTimeout(resolve, 1800))
+		transitioning = false
+		await game.initGame(data.savedUsername)
 	}
 </script>
 

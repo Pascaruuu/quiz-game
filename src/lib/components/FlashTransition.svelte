@@ -1,11 +1,11 @@
 <script lang="ts">
-	import LoadingScreen from './LoadingScreen.svelte';
+	import LoadingScreen from './LoadingScreen.svelte'
 
 	interface Props {
-		visible: boolean;
+		visible: boolean
 	}
 
-	let { visible }: Props = $props();
+	let { visible }: Props = $props()
 </script>
 
 {#if visible}
