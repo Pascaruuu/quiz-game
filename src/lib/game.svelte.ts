@@ -2,18 +2,18 @@ import { GAME_CONFIG } from './gameConfig';
 import { playAttack, playHurt } from './audio';
 
 export interface Question {
-  id: number;
-  meaning: string;
-  answer: string;
-  options: string[];
+	id: number;
+	meaning: string;
+	answer: string;
+	options: string[];
 }
 
 export interface Result {
-  meaning: string;
-  answer: string;
-  chosen: string;
-  correct: boolean;
-  pointsEarned: number;
+	meaning: string;
+	answer: string;
+	chosen: string;
+	correct: boolean;
+	pointsEarned: number;
 }
 
 export function createGame() {
