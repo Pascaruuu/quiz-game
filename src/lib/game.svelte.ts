@@ -30,8 +30,8 @@ export function createGame() {
 	let savedUsername = $state('')
 	let gameToken = $state('')
 
-	let blueSprite = $state('bluestand')
-	let redSprite = $state('redstand')
+	let blueSprite = $state('blueStand')
+	let redSprite = $state('redStand')
 
 	const currentQuestion = $derived(questions[currentIndex])
 	const pointsPerCorrect = GAME_CONFIG.POINTS_PER_CORRECT

@@ -7,6 +7,28 @@ words:
   - tailwindcss
   - TURSO
   - vite
+  - gameover
+  - libsql
+  - Anki
+  - mutebtn
+  - playbtn
+  - musiconclick
+  - musicoffclick
+  - homebgm
+  - homegrassbg
+  - blueatk
+  - bluehurt
+  - redhurt
+  - redatk
+  - bluestand
+  - redstand
+  - musicoff
+  - musicon
+  - suru
+  - distractors
+  - Vicheka
+  - Veansna
+  - Deviruchi
 ignorePaths:
   - node_modules/**
   - .svelte-kit/**
