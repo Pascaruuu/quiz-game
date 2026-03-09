@@ -1,4 +1,3 @@
-// import { fileURLToPath } from 'node:url';
 import rawDeck from './data/n3vocab.txt?raw'
 
 export interface AnkiCard {

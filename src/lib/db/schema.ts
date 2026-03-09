@@ -9,11 +9,3 @@ export const scoreboard = sqliteTable('scoreboard', {
 		.default(sql`(DATETIME('now'))`)
 		.notNull(),
 })
-
-// export const dictionary = sqliteTable("dictionary", {
-//   id: integer("id").primaryKey({ autoIncrement: true }),
-//   question: text("question").notNull().unique(),
-//   answer: text("answer").notNull(),
-//   createdAt: text("createdAt").default(sql`(DATETIME('now'))`).notNull(),
-//   modifiedAt: text("modifiedAt").default(sql`(DATETIME('now'))`).notNull(),
-// });
