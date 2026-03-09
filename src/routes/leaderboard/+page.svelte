@@ -29,8 +29,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each players as player (player.id)}
-						<tr class:top-three={player.rank <= 3}>
+					<!-- changed player.id (nonexistent) -> player.rank -->
+					{#each players as player (player.rank)} 
+						<tr class:top-three={player.rank <= 3}> 
 							<td class="rank">
 								{#if player.rank === 1}🥇
 								{:else if player.rank === 2}🥈
