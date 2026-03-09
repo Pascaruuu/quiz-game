@@ -1,5 +1,5 @@
 $schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
-version: "0.2"
+version: '0.2'
 language: en
 words:
   - lucide
@@ -43,6 +43,6 @@ ignorePaths:
   - vite.config.js
   - tsconfig.json
 import:
-  - "@cspell/dict-typescript/cspell-ext.json"
-  - "@cspell/dict-html/cspell-ext.json"
-  - "@cspell/dict-css/cspell-ext.json"
+  - '@cspell/dict-typescript/cspell-ext.json'
+  - '@cspell/dict-html/cspell-ext.json'
+  - '@cspell/dict-css/cspell-ext.json'
