@@ -37,81 +37,81 @@ function parseSessionToken(token?: string): ScoreSubmission | null {
 function isValidResult(result: unknown): result is QuizResult {
 	if (!result || typeof result !== 'object') return false
 
-    const maybe = result as Partial<QuizResult>
-    return (
-        typeof maybe.score === 'number' &&
-        Array.isArray(maybe.allStreaks) &&
-        maybe.allStreaks.every((n) => typeof n === 'number')
-    )
+	const maybe = result as Partial<QuizResult>
+	return (
+		typeof maybe.score === 'number' &&
+		Array.isArray(maybe.allStreaks) &&
+		maybe.allStreaks.every((n) => typeof n === 'number')
+	)
 }
 
 function calculateServerScore(allStreaks: number[]): number {
-    let total = 0
-    const pointsPerCorrect = GAME_CONFIG.POINTS_PER_CORRECT
-    const penalty = Math.round(pointsPerCorrect * 0.5)
+	let total = 0
+	const pointsPerCorrect = GAME_CONFIG.POINTS_PER_CORRECT
+	const penalty = Math.round(pointsPerCorrect * 0.5)
 
-    for (const comboAtStep of allStreaks) {
-        if (comboAtStep > 0) {
-            const multiplier = comboAtStep >= 5 ? 3 : 1 + Math.max(0, comboAtStep - 1) * 0.5
-            total += Math.round(pointsPerCorrect * multiplier)
-        } else {
-            total = Math.max(0, total - penalty)
-        }
-    }
+	for (const comboAtStep of allStreaks) {
+		if (comboAtStep > 0) {
+			const multiplier = comboAtStep >= 5 ? 3 : 1 + Math.max(0, comboAtStep - 1) * 0.5
+			total += Math.round(pointsPerCorrect * multiplier)
+		} else {
+			total = Math.max(0, total - penalty)
+		}
+	}
 
-    return total
+	return total
 }
 
 function isValidUsername(username: unknown): username is string {
-    return typeof username === 'string' && username.trim().length >= GAME_CONFIG.MIN_USERNAME_LENGTH
+	return typeof username === 'string' && username.trim().length >= GAME_CONFIG.MIN_USERNAME_LENGTH
 }
 
 // Main handler for score submission
 export const POST = async ({ request, getClientAddress, cookies }: RequestEvent) => {
-    if (isRateLimited(getClientAddress())) {
-        return json({ error: 'Too many submissions' }, { status: 429 })
-    }
+	if (isRateLimited(getClientAddress())) {
+		return json({ error: 'Too many submissions' }, { status: 429 })
+	}
 
-    const body = await request.json()
-    const username = body?.username
-    const result = body?.result
+	const body = await request.json()
+	const username = body?.username
+	const result = body?.result
 
-    if (!isValidResult(result)) {
-        return json({ error: 'Missing or invalid result data' }, { status: 400 })
-    }
+	if (!isValidResult(result)) {
+		return json({ error: 'Missing or invalid result data' }, { status: 400 })
+	}
 
-    const token = cookies.get('game_auth')
-    const session = parseSessionToken(token)
-    if (!session) {
-        return json({ error: 'Invalid or expired session token' }, { status: 401 })
-    }
+	const token = cookies.get('game_auth')
+	const session = parseSessionToken(token)
+	if (!session) {
+		return json({ error: 'Invalid or expired session token' }, { status: 401 })
+	}
 
-    const serverCalculatedScore = calculateServerScore(result.allStreaks)
-    if (result.score !== serverCalculatedScore) {
-        return json(
-            {
-                error: 'Score validation failed',
-                debug: { server: serverCalculatedScore, client: result.score }
-            },
-            { status: 400 }
-        )
-    }
+	const serverCalculatedScore = calculateServerScore(result.allStreaks)
+	if (result.score !== serverCalculatedScore) {
+		return json(
+			{
+				error: 'Score validation failed',
+				debug: { server: serverCalculatedScore, client: result.score },
+			},
+			{ status: 400 },
+		)
+	}
 
-    const sessionAgeSeconds = Date.now() / 1000 - session.iat
-    if (sessionAgeSeconds < GAME_CONFIG.MIN_SESSION_AGE_SECONDS) {
-        return json({ error: 'Submission too fast' }, { status: 400 })
-    }
+	const sessionAgeSeconds = Date.now() / 1000 - session.iat
+	if (sessionAgeSeconds < GAME_CONFIG.MIN_SESSION_AGE_SECONDS) {
+		return json({ error: 'Submission too fast' }, { status: 400 })
+	}
 
-    if (!isValidUsername(username)) {
-        return json({ error: 'Invalid username' }, { status: 400 })
-    }
+	if (!isValidUsername(username)) {
+		return json({ error: 'Invalid username' }, { status: 400 })
+	}
 
-    try {
-        await saveScore(username, result.score)
-        cookies.delete('game_auth', { path: '/' })
-        return json({ success: true })
-    } catch (err) {
-        console.error('Score save error:', err)
-        return json({ error: 'Failed to save score' }, { status: 500 })
-    }
+	try {
+		await saveScore(username, result.score)
+		cookies.delete('game_auth', { path: '/' })
+		return json({ success: true })
+	} catch (err) {
+		console.error('Score save error:', err)
+		return json({ error: 'Failed to save score' }, { status: 500 })
+	}
 }
