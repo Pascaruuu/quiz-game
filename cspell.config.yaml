@@ -1,0 +1,17 @@
+$schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+version: '0.2'
+language: en
+words:
+  - sveltekit
+  - vite
+  - tailwindcss
+  - lucide
+ignorePaths:
+  - node_modules/**
+  - .svelte-kit/**
+  - build/**
+  - package-lock.json
+import:
+  - '@cspell/dict-typescript/cspell-ext.json'
+  - '@cspell/dict-html/cspell-ext.json'
+  - '@cspell/dict-css/cspell-ext.json'
