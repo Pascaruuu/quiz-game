@@ -1,0 +1,30 @@
+# lefthook.yml
+
+pre-commit:
+  parallel: true
+  commands:
+    # 1. Linting and Formatting
+    # Use {staged_files} to only check what you're committing
+
+    # let's format it directly instead of just checking it.
+    # check-format:
+    #   glob: '*.{js,ts,svelte,json,md,css}'
+    #   run: npx prettier --check {staged_files}
+    format:
+      glob: '*.{js,ts,svelte,json,md,css}'
+      run: npx prettier --write {staged_files} && git add {staged_files}
+
+    lint:
+      glob: '*.{js,ts,svelte}'
+      run: npx eslint {staged_files}
+
+    # 2. Spell Check
+    # Restrict to the globs defined in your package.json
+    spell-check:
+      glob: '{src/**/*.{svelte,ts,js,css,html},*.config.{js,ts},README.md}'
+      run: npx cspell {staged_files}
+
+    # 3. Svelte-specific Type Checking
+    # This usually needs the whole project context, so we run the full script
+    svelte-check:
+      run: npm run check
