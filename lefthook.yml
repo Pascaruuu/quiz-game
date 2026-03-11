@@ -3,6 +3,9 @@
 pre-commit:
   parallel: true
   commands:
+    prevent-main-commit:
+      skip: git diff --cached --quiet
+      run: npm run prevent-main-commit
     # 1. Linting and Formatting
     # Use {staged_files} to only check what you're committing
 
@@ -11,12 +14,12 @@ pre-commit:
     #   glob: '*.{js,ts,svelte,json,md,css}'
     #   run: npx prettier --check {staged_files}
     format:
-      glob: '*.{js,ts,svelte,json,md,css}'
-      run: npx prettier --write {staged_files} && git add {staged_files}
+      glob: '*.{js,jsx,ts,tsx,svelte,json,md,css,html,yml,yaml}'
+      run: npx prettier --write --ignore-unknown {staged_files} && git add {staged_files}
 
     lint:
-      glob: '*.{js,ts,svelte}'
-      run: npx eslint {staged_files}
+      glob: '*.{js,jsx,ts,tsx,svelte}'
+      run: npx eslint --quiet --cache --cache-strategy {staged_files}
 
     # 2. Spell Check
     # Restrict to the globs defined in your package.json
@@ -28,3 +31,24 @@ pre-commit:
     # This usually needs the whole project context, so we run the full script
     svelte-check:
       run: npm run check
+
+    audit:
+      run: npm audit
+
+    fail-text: push blocked due to build or test failures
+      please resolve the issues above before pushing.
+
+pre-push:
+  parallel: true
+  commands:
+    type-check:
+      glob: '*.{js,jsx,ts,tsx,svelte}'
+      run: npm run check
+    test-unit:
+      glob: '*.{js,jsx,ts,tsx,svelte,css}'
+      run: npm run test:unit --run
+    test-e2e:
+      glob: '{*.{js,jsx,ts,tsx,svelte},package.json}'
+      run: npm run test:e2e
+    fail-text: push blocked due to build or test failures
+      please resolve the issues above before pushing.
