@@ -5,7 +5,7 @@ pre-commit:
   commands:
     prevent-main-commit:
       skip: git diff --cached --quiet
-      run: npm run prevent-main-commit
+      run: pnpm prevent-main-commit
     # 1. Linting and Formatting
     # Use {staged_files} to only check what you're committing
 
@@ -30,25 +30,25 @@ pre-commit:
     # 3. Svelte-specific Type Checking
     # This usually needs the whole project context, so we run the full script
     svelte-check:
-      run: npm run check
+      run: pnpm check
 
     audit:
-      run: npm audit
+      run: pnpm audit
 
-    fail-text: push blocked due to build or test failures
-      please resolve the issues above before pushing.
+  fail-text: push blocked due to build or test failures
+    please resolve the issues above before pushing.
 
 pre-push:
   parallel: true
   commands:
     type-check:
       glob: '*.{js,jsx,ts,tsx,svelte}'
-      run: npm run check
+      run: pnpm check
     test-unit:
       glob: '*.{js,jsx,ts,tsx,svelte,css}'
-      run: npm run test:unit --run
+      run: pnpm run test:unit --run
     test-e2e:
       glob: '{*.{js,jsx,ts,tsx,svelte},package.json}'
-      run: npm run test:e2e
-    fail-text: push blocked due to build or test failures
-      please resolve the issues above before pushing.
+      run: pnpm run test:e2e
+  fail-text: push blocked due to build or test failures
+    please resolve the issues above before pushing.
