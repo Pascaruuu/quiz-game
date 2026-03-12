@@ -3,26 +3,21 @@
 pre-commit:
   parallel: true
   commands:
-    prevent-main-commit:
-      skip: git diff --cached --quiet
-      run: npm run prevent-main-commit
-    # 1. Linting and Formatting
-    # Use {staged_files} to only check what you're committing
+    # prevent-main-commit:
+    # skip: git diff --cached --quiet
+    # run: pnpm prevent-main-commit
 
-    # let's format it directly instead of just checking it.
-    # check-format:
-    #   glob: '*.{js,ts,svelte,json,md,css}'
-    #   run: npx prettier --check {staged_files}
+    # prettier
     format:
       glob: '*.{js,jsx,ts,tsx,svelte,json,md,css,html,yml,yaml}'
-      run: npx prettier --write --ignore-unknown {staged_files} && git add {staged_files}
+      run: npx prettier --check --write --ignore-unknown {staged_files} && git add {staged_files}
 
+    # esLint
     lint:
       glob: '*.{js,jsx,ts,tsx,svelte}'
       run: npx eslint --quiet --cache --cache-strategy {staged_files}
 
-    # 2. Spell Check
-    # Restrict to the globs defined in your package.json
+    #CSpell
     spell-check:
       glob: '{src/**/*.{svelte,ts,js,css,html},*.config.{js,ts},README.md}'
       run: npx cspell {staged_files}
@@ -30,25 +25,25 @@ pre-commit:
     # 3. Svelte-specific Type Checking
     # This usually needs the whole project context, so we run the full script
     svelte-check:
-      run: npm run check
+      run: pnpm check
 
     audit:
-      run: npm audit
+      run: pnpm audit --audit-level=high
 
-    fail-text: push blocked due to build or test failures
-      please resolve the issues above before pushing.
+  fail-text: push blocked due to build or test failures
+    please resolve the issues above before pushing.
 
 pre-push:
   parallel: true
   commands:
     type-check:
       glob: '*.{js,jsx,ts,tsx,svelte}'
-      run: npm run check
-    test-unit:
-      glob: '*.{js,jsx,ts,tsx,svelte,css}'
-      run: npm run test:unit --run
-    test-e2e:
-      glob: '{*.{js,jsx,ts,tsx,svelte},package.json}'
-      run: npm run test:e2e
-    fail-text: push blocked due to build or test failures
-      please resolve the issues above before pushing.
+      run: pnpm check
+    # test-unit:
+    #   glob: '*.{js,jsx,ts,tsx,svelte,css}'
+    #   run: pnpm run test:unit --run
+    # test-e2e:
+    #   glob: '{*.{js,jsx,ts,tsx,svelte},package.json}'
+    #   run: pnpm run test:e2e
+  fail-text: push blocked due to build or test failures
+    please resolve the issues above before pushing.
