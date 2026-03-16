@@ -9,11 +9,25 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
-		"noUnusedParameters": true,
-		"noUncheckedIndexedAccess": true,
 		"strict": true,
 		"moduleResolution": "node",
-		"types": ["node"]
+		"types": ["node"],
+
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"allowUnusedLabels": false,
+
+		"isolatedModules": true,
+		"noImplicitOverride": true,
+		"exactOptionalPropertyTypes": true,
+		"noPropertyAccessFromIndexSignature": true,
+
+		"verbatimModuleSyntax": true,
+		"noEmitOnError": true,
+		"useDefineForClassFields": true,
+		"noUncheckedSideEffectImports": true
 	}
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files

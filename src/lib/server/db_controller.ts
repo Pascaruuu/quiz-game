@@ -10,8 +10,8 @@ export async function saveScore(username: string, score: number) {
 	const current = await db.select().from(scoreboard).orderBy(desc(scoreboard.score)).limit(10)
 
 	if (current.length >= 10) {
-		const lowestScore = current[current.length - 1].score
-		if (score <= lowestScore) return
+		const lowest = current.at(-1)
+		if (!lowest || score <= lowest.score) return
 	}
 
 	await db.insert(scoreboard).values({ username, score })
