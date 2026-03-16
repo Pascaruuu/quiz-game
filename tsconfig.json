@@ -10,6 +10,7 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"noUnusedParameters": true,
+		"noUncheckedIndexedAccess": true,
 		"strict": true,
 		"moduleResolution": "node",
 		"types": ["node"]
