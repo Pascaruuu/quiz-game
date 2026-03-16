@@ -9,6 +9,7 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
+		"noUnusedParameters": true,
 		"strict": true,
 		"moduleResolution": "node",
 		"types": ["node"]
