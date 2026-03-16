@@ -35,10 +35,10 @@ function extractMeaning(html: string): string {
 	const glossaryMatch = html.match(/data-sc-content="glossary">(.*?)<\/ul>/s)
 	if (!glossaryMatch) return ''
 
-	const liMatches = glossaryMatch[1].matchAll(/<li>(.*?)<\/li>/gs)
+	const liMatches = glossaryMatch[1] ? glossaryMatch[1].matchAll(/<li>(.*?)<\/li>/gs) : []
 	const meanings: string[] = []
 	for (const match of liMatches) {
-		const text = match[1].replace(/<[^>]+>/g, '').trim()
+		const text = match[1]?.replace(/<[^>]+>/g, '').trim()
 		if (text) meanings.push(text)
 		if (meanings.length >= 3) break
 	}
