@@ -4,6 +4,8 @@
 		"esbenp.prettier-vscode",
 		"dbaeumer.vscode-eslint",
 		"streetsidesoftware.code-spell-checker",
-		"PKief.material-icon-theme"
+		"PKief.material-icon-theme",
+		"coderabbit.coderabbit-vscode",
+		"sonarsource.sonarlint-vscode"
 	]
 }
