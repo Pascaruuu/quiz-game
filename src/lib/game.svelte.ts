@@ -87,7 +87,7 @@ export function createGame() {
 		if (isGameOver || !currentQuestion) return
 
 		const correct = selectedOption === currentQuestion.answer
-		let pointsEarned
+		let pointsEarned: number
 
 		if (correct) {
 			combo++
