@@ -12,11 +12,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  # TURSO_CONNECTION_URL: ${{ secrets.TURSO_CONNECTION_URL }}
-  # TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
-  # JWT_SECRET: ${{ secrets.JWT_SECRET }}
-
 jobs:
   ci:
     runs-on: ubuntu-latest
