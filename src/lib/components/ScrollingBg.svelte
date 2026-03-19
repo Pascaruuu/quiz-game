@@ -9,7 +9,7 @@
 		children?: Snippet
 	}
 
-	let { src = '/homegrassbg.png', speed = 0.5, class: className = '', children }: Props = $props()
+	const { src = '/homegrassbg.png', speed = 0.5, class: className = '', children }: Props = $props()
 
 	let bgPos = $state(0)
 	let animFrame: number

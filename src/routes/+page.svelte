@@ -6,7 +6,7 @@
 	import FlashTransition from '$lib/components/FlashTransition.svelte'
 	import { playFightSfx } from '$lib/audio'
 
-	let { data }: { data: PageData } = $props()
+	const { data }: { data: PageData } = $props()
 	let transitioning = $state(false)
 
 	function playAndTransition() {

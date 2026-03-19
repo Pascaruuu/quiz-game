@@ -5,7 +5,7 @@
 		visible: boolean
 	}
 
-	let { visible }: Props = $props()
+	const { visible }: Props = $props()
 </script>
 
 {#if visible}
