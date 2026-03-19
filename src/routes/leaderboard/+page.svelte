@@ -2,7 +2,7 @@
 	import type { PageData } from './$types'
 	import { resolve } from '$app/paths'
 
-	let { data } = $props<{ data: PageData }>()
+	const { data } = $props<{ data: PageData }>()
 </script>
 
 <div class="leaderboard">

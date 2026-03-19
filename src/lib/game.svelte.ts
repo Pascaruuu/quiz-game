@@ -15,6 +15,14 @@ export interface Result {
 	correct: boolean
 	pointsEarned: number
 }
+// Combo multiplier: 1x, 1.5x, 2x, 2.5x, 3x (caps at 5 streak)
+function getMultiplier(currentCombo: number): number {
+	if (currentCombo >= 5) return 3
+	if (currentCombo >= 4) return 2.5
+	if (currentCombo >= 3) return 2
+	if (currentCombo >= 2) return 1.5
+	return 1
+}
 
 export function createGame() {
 	let questions = $state<Question[]>([])
@@ -36,15 +44,6 @@ export function createGame() {
 	const currentQuestion = $derived(questions[currentIndex])
 	const pointsPerCorrect = GAME_CONFIG.POINTS_PER_CORRECT
 	const totalPossible = $derived(questions.length * pointsPerCorrect)
-
-	// Combo multiplier: 1x, 1.5x, 2x, 2.5x, 3x (caps at 5 streak)
-	function getMultiplier(currentCombo: number): number {
-		if (currentCombo >= 5) return 3
-		if (currentCombo >= 4) return 2.5
-		if (currentCombo >= 3) return 2
-		if (currentCombo >= 2) return 1.5
-		return 1
-	}
 
 	async function initGame(username: string) {
 		savedUsername = username
@@ -88,7 +87,7 @@ export function createGame() {
 		if (isGameOver || !currentQuestion) return
 
 		const correct = selectedOption === currentQuestion.answer
-		let pointsEarned = 0
+		let pointsEarned
 
 		if (correct) {
 			combo++

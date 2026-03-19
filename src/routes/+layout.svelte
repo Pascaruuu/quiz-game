@@ -7,7 +7,7 @@
 	import LoadingScreen from '$lib/components/LoadingScreen.svelte'
 	import { initAudio, playHomeBgm, playClick, toggleMute } from '$lib/audio'
 
-	let { children } = $props()
+	const { children } = $props()
 	let started = $state(false)
 	let showLoading = $state(false)
 	let username = $state('')

@@ -7,7 +7,7 @@
 	import { playFightSfx } from '$lib/audio'
 	import { resolve } from '$app/paths'
 
-	let { data } = $props<{ data: PageData }>()
+	const { data } = $props<{ data: PageData }>()
 	let transitioning = $state(false)
 
 	const game = createGame()
